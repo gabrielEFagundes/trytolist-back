@@ -3,6 +3,7 @@ package com.gundes.trytolist.controller;
 import com.gundes.trytolist.domain.dto.user.UserLogin;
 import com.gundes.trytolist.domain.dto.user.UserRequest;
 import com.gundes.trytolist.domain.dto.user.UserResponse;
+import com.gundes.trytolist.service.IUserService;
 import com.gundes.trytolist.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final UserService service;
+    private final IUserService service;
 
     @PostMapping
     public UserResponse addNewUser(@RequestBody UserRequest req){

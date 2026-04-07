@@ -9,16 +9,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class UserMapper {
+public class UserMapper implements IUserMapper{
 
+    @Override
     public User toEntity(UserRequest req){
         return new User(req.name(), req.email(), req.password());
     }
 
+    @Override
     public UserResponse toResponse(User u){
         return new UserResponse(u.getId(), u.getName(), u.getEmail(), u.getPassword(), u.getTasks());
     }
 
+    @Override
     public List<UserResponse> toResponse(List<User> u){
         List<UserResponse> users = new ArrayList<>();
 
