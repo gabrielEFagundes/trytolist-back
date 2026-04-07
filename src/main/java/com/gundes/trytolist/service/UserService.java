@@ -2,6 +2,7 @@ package com.gundes.trytolist.service;
 
 import com.gundes.trytolist.domain.dto.task.TaskRequest;
 import com.gundes.trytolist.domain.dto.task.TaskResponse;
+import com.gundes.trytolist.domain.dto.user.UserLogin;
 import com.gundes.trytolist.domain.dto.user.UserRequest;
 import com.gundes.trytolist.domain.dto.user.UserResponse;
 import com.gundes.trytolist.domain.mapper.TaskMapper;
@@ -53,6 +54,17 @@ public class UserService {
         }
 
         return HttpStatus.BAD_REQUEST;
+    }
+
+    public UserResponse login(UserLogin loginDTO) {
+        User user = repository
+                .findByEmailAndPassword(
+                        loginDTO.email(),
+                        loginDTO.password()
+                )
+                .orElseThrow(() -> new RuntimeException("Email ou senha inválidos"));
+
+        return mapper.toResponse(user);
     }
 
 }

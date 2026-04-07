@@ -1,5 +1,6 @@
 package com.gundes.trytolist.controller;
 
+import com.gundes.trytolist.domain.dto.user.UserLogin;
 import com.gundes.trytolist.domain.dto.user.UserRequest;
 import com.gundes.trytolist.domain.dto.user.UserResponse;
 import com.gundes.trytolist.service.UserService;
@@ -34,4 +35,9 @@ public class UserController {
         return service.deleteUser(id);
     }
 
+
+    @PostMapping("/login")
+    public UserResponse login(@RequestBody UserLogin loginDTO) {
+        return service.login(loginDTO);
+    }
 }
