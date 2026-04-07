@@ -3,6 +3,8 @@ package com.gundes.trytolist.service;
 import com.gundes.trytolist.domain.dto.task.TaskRequest;
 import com.gundes.trytolist.domain.dto.task.TaskResponse;
 import com.gundes.trytolist.domain.dto.user.UserResponse;
+import com.gundes.trytolist.domain.mapper.ITaskMapper;
+import com.gundes.trytolist.domain.mapper.IUserMapper;
 import com.gundes.trytolist.domain.mapper.TaskMapper;
 import com.gundes.trytolist.domain.mapper.UserMapper;
 import com.gundes.trytolist.domain.model.Task;
@@ -19,13 +21,14 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class TaskService {
+public class TaskService implements ITaskService{
 
     private final TaskRepository repository;
     private final UserRepository userRepository;
-    private final TaskMapper mapper;
-    private final UserMapper userMapper;
+    private final ITaskMapper mapper;
+    private final IUserMapper userMapper;
 
+    @Override
     public List<Task> createTasks(Long userId, List<TaskRequest> req){
         List<Task> tasks = mapper.toEntity(req);
 
@@ -35,6 +38,7 @@ public class TaskService {
         return repository.saveAll(tasks);
     }
 
+    @Override
     public UserResponse addTasks(Long userId, List<TaskRequest> reqs){
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found."));
 
@@ -43,7 +47,7 @@ public class TaskService {
         user.getTasks().addAll(tasks);
         return userMapper.toResponse(userRepository.save(user));
     }
-
+    @Override
     public UserResponse deleteTask(Long userId, Long taskId){
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found."));
 
@@ -51,7 +55,7 @@ public class TaskService {
         user.getTasks().removeIf(task -> task.getId().equals(taskId));
         return userMapper.toResponse(userRepository.save(user));
     }
-
+    @Override
     public TaskResponse concludeTask(Long taskId){
         Task task = repository.findById(taskId).orElseThrow(() -> new RuntimeException("Task not found."));
 
