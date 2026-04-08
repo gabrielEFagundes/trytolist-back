@@ -1,4 +1,4 @@
-package com.gundes.trytolist.domain.model;
+package com.gundes.trytolist;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

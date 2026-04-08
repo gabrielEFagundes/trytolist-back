@@ -1,4 +1,4 @@
-package com.gundes.trytolist.domain.enums;
+package com.gundes.trytolist;
 
 public enum Priorities {
     HIGH, MEDIUM, LOW

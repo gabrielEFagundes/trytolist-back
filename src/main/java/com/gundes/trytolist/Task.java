@@ -1,7 +1,7 @@
-package com.gundes.trytolist.domain.model;
+package com.gundes.trytolist;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.gundes.trytolist.domain.enums.Priorities;
+import com.gundes.trytolist.Priorities;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

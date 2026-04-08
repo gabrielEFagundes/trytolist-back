@@ -1,6 +1,5 @@
-package com.gundes.trytolist.repository;
+package com.gundes.trytolist;
 
-import com.gundes.trytolist.domain.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
