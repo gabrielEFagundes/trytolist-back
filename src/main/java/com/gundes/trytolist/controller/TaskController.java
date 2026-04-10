@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://127.0.0.1:5500")
 @RequestMapping("/task")
 @RequiredArgsConstructor
 public class TaskController {
@@ -20,6 +21,11 @@ public class TaskController {
     @PostMapping("/user/{userId}")
     public UserResponse addTask(@PathVariable Long userId, @RequestBody List<TaskRequest> reqs){
         return service.addTasks(userId, reqs);
+    }
+
+    @GetMapping("/user/{userId}")
+    public List<TaskResponse> getTasksFromUser(@PathVariable Long userId){
+        return service.getTasks(userId);
     }
 
     @DeleteMapping("/user/{userId}/tasks/{taskId}")

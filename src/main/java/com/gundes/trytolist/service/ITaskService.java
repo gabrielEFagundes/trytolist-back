@@ -15,4 +15,6 @@ public interface ITaskService {
     UserResponse deleteTask(Long userId, Long taskId);
 
     TaskResponse concludeTask(Long taskId);
+
+    List<TaskResponse> getTasks(Long userId);
 }

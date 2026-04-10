@@ -64,4 +64,11 @@ public class TaskService implements ITaskService{
         return mapper.toResponse(repository.save(task));
     }
 
+    @Override
+    public List<TaskResponse> getTasks(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found."));
+
+        return mapper.toResponse(user.getTasks());
+    }
+
 }
