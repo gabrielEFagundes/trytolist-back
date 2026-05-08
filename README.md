@@ -7,6 +7,47 @@
 
 **TryToList** is a backend service built with Spring Boot, providing API endpoints for managing tasks and user lists. This is the server-side component of the TryToList application.
 
+## Architecture Diagram
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                      Client Application                      │
+└────────────────────────────┬───────────────────────���────────┘
+                             │
+                        HTTP/REST
+                             │
+                             ▼
+┌─────────────────────────────────────────────────────────────┐
+│                    Spring Boot Backend                       │
+│  ┌──────────────────────────────────────────────────────┐   │
+│  │           REST Controllers (@RestController)         │   │
+│  │  - Task endpoints (/api/tasks)                       │   │
+│  │  - List endpoints (/api/lists)                       │   │
+│  └────────────────────┬─────────────────────────────────┘   │
+│                       │                                       │
+│  ┌────────────────────▼─────────────────────────────────┐   │
+│  │      Service Layer (@Service)                        │   │
+│  │  - Business Logic                                    │   │
+│  │  - Data Processing                                   │   │
+│  └────────────────────┬─────────────────────────────────┘   │
+│                       │                                       │
+│  ┌────────────────────▼─────────────────────────────────┐   │
+│  │   Repository Layer (Spring Data JPA)                 │   │
+│  │  - Database Access (CRUD operations)                 │   │
+│  └────────────────────┬─────────────────────────────────┘   │
+└───────────────────────┼──────────────────────────────────────┘
+                        │
+                   JDBC Driver
+                        │
+                        ▼
+┌─────────────────────────────────────────────────────────────┐
+│                     MySQL Database                           │
+│  - Tasks Table                                              │
+│  - Lists Table                                              │
+│  - User Data                                                │
+└─────────────────────────────────────────────────────────────┘
+```
+
 ## Tech Stack
 
 - **Java 21** - Programming language
