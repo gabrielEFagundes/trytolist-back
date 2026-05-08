@@ -12,7 +12,7 @@
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │                      Client Application                      │
-└────────────────────────────┬───────────────────────���────────┘
+└────────────────────────────┬────────────────────────────────┘
                              │
                         HTTP/REST
                              │
@@ -46,6 +46,115 @@
 │  - Lists Table                                              │
 │  - User Data                                                │
 └─────────────────────────────────────────────────────────────┘
+```
+
+## Class Diagram
+
+```mermaid
+classDiagram
+    %% Domain Models
+    class Task {
+        -Long id
+        -String title
+        -String description
+        -Boolean completed
+        -LocalDateTime createdAt
+        -LocalDateTime updatedAt
+        -List~tag~ tags
+        +getId() Long
+        +getTitle() String
+        +setTitle(String) void
+        +getDescription() String
+        +setDescription(String) void
+        +isCompleted() Boolean
+        +setCompleted(Boolean) void
+    }
+
+    class TaskList {
+        -Long id
+        -String name
+        -String description
+        -LocalDateTime createdAt
+        -LocalDateTime updatedAt
+        -List~Task~ tasks
+        +getId() Long
+        +getName() String
+        +setName(String) void
+        +addTask(Task) void
+        +removeTask(Task) void
+        +getTasks() List~Task~
+    }
+
+    %% Controllers
+    class TaskController {
+        -TaskService taskService
+        +getAllTasks() List~Task~
+        +getTaskById(Long) Task
+        +createTask(Task) Task
+        +updateTask(Long, Task) Task
+        +deleteTask(Long) void
+    }
+
+    class TaskListController {
+        -TaskListService taskListService
+        +getAllLists() List~TaskList~
+        +getListById(Long) TaskList
+        +createList(TaskList) TaskList
+        +updateList(Long, TaskList) TaskList
+        +deleteList(Long) void
+    }
+
+    %% Services
+    class TaskService {
+        -TaskRepository taskRepository
+        +getAllTasks() List~Task~
+        +getTaskById(Long) Task
+        +createTask(Task) Task
+        +updateTask(Long, Task) Task
+        +deleteTask(Long) void
+        +getTasksByList(Long) List~Task~
+    }
+
+    class TaskListService {
+        -TaskListRepository taskListRepository
+        -TaskRepository taskRepository
+        +getAllLists() List~TaskList~
+        +getListById(Long) TaskList
+        +createList(TaskList) TaskList
+        +updateList(Long, TaskList) TaskList
+        +deleteList(Long) void
+    }
+
+    %% Repositories
+    class TaskRepository {
+        <<interface>>
+        +findAll() List~Task~
+        +findById(Long) Optional~Task~
+        +save(Task) Task
+        +delete(Task) void
+        +findByTaskList(TaskList) List~Task~
+    }
+
+    class TaskListRepository {
+        <<interface>>
+        +findAll() List~TaskList~
+        +findById(Long) Optional~TaskList~
+        +save(TaskList) TaskList
+        +delete(TaskList) void
+    }
+
+    %% Relationships
+    TaskListController --> TaskListService : uses
+    TaskController --> TaskService : uses
+    
+    TaskListService --> TaskListRepository : uses
+    TaskListService --> TaskRepository : uses
+    TaskService --> TaskRepository : uses
+    
+    TaskRepository --> Task : manages
+    TaskListRepository --> TaskList : manages
+    
+    TaskList --> Task : contains
 ```
 
 ## Tech Stack
